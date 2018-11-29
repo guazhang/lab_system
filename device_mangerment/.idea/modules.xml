@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../cnblog/.idea/cnblog.iml" filepath="$PROJECT_DIR$/../cnblog/.idea/cnblog.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/device_mangerment.iml" filepath="$PROJECT_DIR$/.idea/device_mangerment.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../obj/.idea/obj.iml" filepath="$PROJECT_DIR$/../obj/.idea/obj.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../test/.idea/test.iml" filepath="$PROJECT_DIR$/../test/.idea/test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../testcase/.idea/testcase.iml" filepath="$PROJECT_DIR$/../testcase/.idea/testcase.iml" />
+    </modules>
+  </component>
+</project>

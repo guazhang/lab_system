@@ -1,0 +1,76 @@
+{% extends 'layout.html' %}
+
+{% block css %}
+    <style>
+        .guige {
+            margin: 20px;
+        }
+
+        .guige-table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .guige-table .title {
+            background: #f5fafe;
+            text-align: left;
+            font-weight: bold;
+            line-height: 32px;
+            height: 32px;
+            font-family: "微软雅黑";
+        }
+
+        .guige-table td, .content .guige-table th {
+            border: 1px solid #dcdcdc;
+            line-height: 30px;
+            height: 30px;
+            padding: 0 10px;
+        }
+
+        .guige-table .body-left {
+            width: 126px;
+            font-weight: normal;
+            text-align: right;
+            color: #666;
+        }
+
+        .guige-table .body-right {
+            color: #333;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="guige">
+        <table class="guige-table">
+            <tbody>
+            <tr>
+                <th colspan="5" class="title f14" style="border-left:2px solid #0488cd;">info</th>
+            </tr>
+            <tr>
+                <td>storage_name</td>
+                <td>storage_wwpn</td>
+                <td>switch_name</td>
+                <td>switch_port</td>
+{#                <td>st_port_protocol</td>#}
+
+            </tr>
+{#            {% for n in context %}#}
+                <tr>
+                    <td>{{ st_name }}</td>
+                    <td>{{ st_port  }}</td>
+                    <td>{{ sw_name }}</td>
+                    <td>{{ sw_port }}</td>
+{#                    <td>{{ sw_port_protocol }}</td>#}
+
+                </tr>
+{#            {% endfor %}#}
+
+
+
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

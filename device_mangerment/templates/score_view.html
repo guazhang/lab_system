@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/bs/css/bootstrap.css">
+    <script src="/static/js/jquery-3.1.1.js"></script>
+    <script src="/static/HC/code/highcharts.js"></script>
+
+</head>
+<body>
+
+<h3>{{ student_obj.username }}所报班级</h3>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>班级名称</th>
+                    <th>成绩柱状图</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for class_obj in class_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ class_obj.course.name }}({{ class_obj.semester }})</td>
+                        <td class="char" cid="{{ class_obj.pk }}" sid="{{ student_obj.pk }}"><a>成绩柱状图</a></td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="charts" style="width: 400px"></div>
+</div>
+
+
+<script>
+    $("tbody .char").click(function () {
+        var cid = $(this).attr("cid");
+        var sid = $(this).attr("sid");
+
+        $.ajax({
+            url: "",
+            data: {
+                cid: cid,
+                sid: sid
+            },
+            success: function (data) {
+
+                $('#charts').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: '个人成绩'
+                    },
+                    subtitle: {
+                        text: '数据截止 2017-03，来源: <a href="https://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Wikipedia</a>'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        labels: {
+                            rotation: -45,
+                            style: {
+                                fontSize: '13px',
+                                fontFamily: 'Verdana, sans-serif'
+                            }
+                        }
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: '分数'
+                        }
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    tooltip: {
+                        pointFormat: '分数: <b>{point.y:.2f} 百万</b>'
+                    },
+                    series: [{
+                        name: '分数',
+                        data: data,
+                        dataLabels: {
+                            enabled: true,
+                            rotation: -90,
+                            color: 'red',
+                            align: 'right',
+                            format: '{point.y:.1f}', // one decimal
+                            y: 10, // 10 pixels down from the top
+                            style: {
+                                fontSize: '13px',
+                                fontFamily: 'Verdana, sans-serif'
+                            }
+                        }
+                    }]
+                });
+
+            }
+        })
+
+    })
+</script>
+</body>
+</html>

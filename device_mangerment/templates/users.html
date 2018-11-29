@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class="container">
+    <h3>查看用户</h3>
+
+   <div class="col-md-6">
+       {% if per.add %}
+             <a href="/users/add/" class="btn btn-primary">添加用户</a>
+       {% endif %}
+
+        <table class="table table-borderd table-striped col-md-offset-4">
+           {% for user in user_list %}
+               <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ user.name }}</td>
+
+                 {% if per.edit %}
+                     <td><a href="/users/{{ user.pk }}/change" class="btn btn-success">编辑</a></td>
+                 {% endif %}
+
+                 {% if per.delete  %}
+                     <td><a href="/users/{{ user.pk }}/delete/" class="btn btn-success">删除</a></td>
+                 {% endif %}
+
+               </tr>
+            {% endfor %}
+         </table>
+   </div>
+</div>
+{% endblock %}

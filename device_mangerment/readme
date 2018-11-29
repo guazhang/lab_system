@@ -1,0 +1,251 @@
+pip install --upgrade pip django
+
+python3.7 -m pip install djangorestframework
+python3.7 -m pip install --upgrade setuptools
+python3.7 -m pip install Pillow ansible==2.7.1 ansible-cmdb  pyyaml django-crontab
+
+
+
+yum install libffi-devel redhat-rpm-config python3-devel
+    libjpeg-turbo-devel yum install python-yaml  sqlite-devel
+
+
+yum install ansible  version 2.7.1
+git clone https://github.com/ansible/ansible.git
+
+
+
+
+Package             Version
+------------------- -------
+ansible             2.7.1  
+ansible-cmdb        1.29   
+asn1crypto          0.24.0 
+bcrypt              3.1.4  
+cffi                1.11.5 
+cryptography        2.4.2  
+Django              2.1.3  
+django-crontab      0.7.1  
+djangorestframework 3.9.0  
+idna                2.7    
+Jinja2              2.10   
+jsonxs              0.6    
+Mako                1.0.7  
+MarkupSafe          1.1.0  
+paramiko            2.4.2  
+Pillow              5.3.0  
+pip                 18.1   
+pyaml               18.11.0
+pyasn1              0.4.4  
+pycparser           2.19   
+PyNaCl              1.3.0  
+pytz                2018.7 
+PyYAML              3.13   
+setuptools          40.6.2 
+six                 1.11.0 
+ushlex              0.99.1 
+
+
+
+
+
+
+
+
+
+
+
+add job to crontab:
+python manage.py crontab add
+
+python manage.py crontab show
+
+python manage.py crontab remove
+
+
+start:
+python manage.py runserver
+
+update database:
+python3 manage.py makemigrations
+python3 manage.py migrate
+
+
+
+1. add instance steps :
+    1.1  add protocal instance if protocal don't included the new one
+    1.2  add storage or switch instance
+    1.3  add storage port instance or switch port instance
+    1.4  add host instance and select storage port instance and switch port instance
+
+2.
+    page details
+
+    the page host page info /stark/app01/host/list/
+
+        1. scan
+            1.1 need server power on and beaker default passwd, eg： QwAo2U6GRxyNPKiZaOCx
+            1.2 for FC/FCoE server, scan auto update wwpn to databse if have fc_host
+        2. status itmes
+            1.1 will check the server status every 30 min with ping command, and it add to crontab
+
+        3. all server HW info from ansible facts will be storage in xx.html , not in database
+
+        4.  host was mapped to switch_port / storage_port not switch/ storage
+
+        5. host_st was what connected  storage ports ,default was 4 storage port if the host was FC server
+            if the host not FC server please assignned to "None.0"
+
+        6. host_sw was the host connect to switch port switch_name.port_name
+
+        7. boot_to : high light the server boot to which driver ,eg: mpt3sas,ahci,bnx2fc, driver name
+
+        8. CNAs : the CNA/FC host details info, "card describe,driver name, protocol name,wwpn",
+            the wwpn will auto update if the server included CNAs
+
+        9. disks : local disks, number, disk name,
+
+        10. host_dep : the server was ownned by which  department or group, it decide if you have CURD access for the server
+
+        11. nick_name : the server short name
+
+        edit/delete button
+
+        edit : /stark/app01/host/1/change/  edit id == 1 instance
+
+        for edit page, we should pay attention to  “switch name” itmes, we should select  one switch ,
+
+        then will select switch port of the switch instance. if you have two port please do again，
+        and all event triggered by javesript onblur
+
+
+
+    /stark/app01/storage/list/
+
+        id : the number of itmes in  database
+
+        storage_name : the storage name should be like PEK2_EMC-5300
+
+        protocol : which protocols was supported for the storage
+
+        ip : the storage ip or hostname
+
+        licence start date :
+
+        licence end date :
+
+        edit/delete button
+
+
+    /stark/app01/storage_port/list/
+
+        ID : the storage port id in database
+
+        storage name : the port was ownned by which storage
+
+        port speed : which speed should be supported on the port
+
+        port_wwpn : the port wwpn /iqn
+
+        port protocol : which protocol was supported on the port
+
+        slot : the storage SPA/SPB
+
+        edit/delete button
+
+
+    /stark/app01/switch/list/
+
+        ID: whr switch order number in database
+
+        switch name : the switch name should be like PEK2_Cisco_5020
+
+        ip : switch ip/hostname
+
+        swich_sername : ssh user
+
+        sw_passwd: ssh passwd
+
+        protocol : which protocol should be supported for the switch
+
+        licence start date :
+
+        licence end date :
+
+        edit/delete button
+
+
+
+    /stark/app01/switch_port/list/
+
+
+        1. ID ： switch port order number was in database
+
+        2. switch_name :  the port ownned by which switch
+
+        3. port speed :  which speed was supported for the port
+
+        4. switch port : the port name
+
+        5. port protocol : which protocol was supported on the port
+
+        6. slot : the port was in which solt on switch
+
+        edit/delete button
+
+
+    stark/app01/headware/list/
+
+        this is empty table , no ideas what's info should be file here
+
+
+
+    /stark/app01/protocol/list/
+
+        ID : the protocol in database order
+
+        protocol name : protocol name or detilas info
+
+        edit/delete button
+
+        /stark/app01/role/list/
+
+        the system include rbac function, so you can not CURD other info/table if you don't have access
+
+        for the default setting, vir-qe group member just view user table access
+                                 storage-qe  list/add/edit user table but can not delete user member
+                                             list/add/edit host table but can not delete host instance
+                                             list/add/edit switch table but can not delete switch instance
+
+                                 kernel-qe   list/add user table but can not delete/edit user member
+
+        for all the access just for testing, and I don't enable the rbac, so every one have same access for evey table that was full access.
+
+
+    stark/app01/user/list/
+
+        you can check the system users and user info in the user table
+
+        ID: user order was in database
+        user name:
+        user role: the user ownned which group/ role
+
+        user_details : user details info if the user filed
+
+        edit/delete button
+
+
+
+    /login/   login page
+
+    need input verify code,user name, passwd those will store in cookie/session
+    which used for rbac
+
+    /reg/     register page
+    need select your role or group and assign default access
+
+
+
+
+
+

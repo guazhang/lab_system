@@ -1,0 +1,110 @@
+{% extends 'layout.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    <form method="post" class="form-horizontal" novalidate>
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ field.label }}：</label>
+                <div class="col-sm-9">
+                    {{ field }}
+                    {{ field.errors.0 }}
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="col-sm-offset-2 col-sm-9">
+            <input class="btn btn-primary" type="submit" value="提 交">
+        </div>
+    </form>
+
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+
+    <script>
+    var  $select_div=$("<div>sw_port</div>").attr({class:'col-sm-3 sw_port_div'});
+    var $select_port= $('<select/>').attr({ name: 'sw_port', class: 'form-control sw_port',id:'sw_poprt' });
+
+
+    $(".sw_name").blur(function () {
+
+        // ajax请求
+        $.ajax({
+            url:"/ajax_sw/",
+            type:"post",
+            dataTyoe:"JSON",
+            data:{"num1":$(".sw_name").val(),
+{#                  "num2":$(".sw_name").attr("sw_name"),#}
+                  "csrfmiddlewaretoken":$("[name='csrfmiddlewaretoken']").val()},
+            success:function (res) {
+{#                alert(res);#}
+                console.log(res);
+
+{#                var  $select_div=$("<div>sw_port</div>").attr({class:'col-sm-3 sw_port_div'});#}
+
+                $select_port.appendTo($select_div);
+                $select_div.appendTo($(".sw_name").parent());
+                console.log($select_div);
+                $("<option>'pleae select switch port'</option>", { value: "", text: "" }).appendTo($select_port);
+                console.log($select_port);
+                $(".sw_port")[0].options.length=1;
+                $.each(res, function (i,item) {
+                    console.log(i,item);
+                    $("<option></option>",{ value:i,text:item }).appendTo($select_port);
+{#                    var $option=$("<option>");#}
+{#                    $option.html(item);#}
+{#                    $(".sw_port").append($select_port).append($option)#}
+
+                });
+{#                $(".sw_port").prepend("<option value='0'>请选择</option>");#}
+{#                for (var i =0;i<res.length;i++){#}
+{#                    $(".sw_port").append("<option>"+msg[i]+"</option>")#}
+{#                }#}
+
+{#                console.log($select_port)#}
+
+                $(".sw_port").blur(function () {
+                    var sw_port_name  = $(".sw_port").find("option:selected").text();
+                    var sw_port_nid = $(".sw_port ").val();
+
+                    var hostname = $("#id_hostname").val();
+                    var sw_id = $(".sw_name").val();
+                    console.log(sw_port_nid,sw_port_name,sw_id,hostname);
+
+                    $.ajax({
+                        url:"/ajax_sw_port/",
+                        type:"post",
+                        dataTyoe:"JSON",
+                        data:{"sw_port_nid":sw_port_nid,
+{#                              "sw_port_name":sw_port_name,#}
+                              "hostname":hostname,
+                              "sw_id":sw_id,
+                              "csrfmiddlewaretoken":$("[name='csrfmiddlewaretoken']").val()},
+                        success:function (res) {
+                            {#                alert(res);#}
+                            console.log(res);
+                            if (res.status) {
+                                alert("update switch port successful")
+                            }
+                        }})
+
+                })
+
+
+            }
+
+            });
+
+        });
+
+
+
+    </script>
+
+{% endblock %}
+

@@ -1,0 +1,7 @@
+    <div class="menu">
+
+        {% for menu_permission in menu_permission_list %}
+            <p><a href="{{ menu_permission.permissions__url }}">{{ menu_permission.permissions__title }}</a></p>
+        {% endfor %}
+
+    </div>

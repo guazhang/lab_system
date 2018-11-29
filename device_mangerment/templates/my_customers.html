@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>Title</title>
+     <link rel="stylesheet" href="/static/bs/css/bootstrap.css">
+</head>
+<body>
+<h3>我的客户资源</h3>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table-bordered table-striped table">
+                <thead>
+                <tr>
+
+                </tr>
+                </thead>
+
+                <tbody>
+{#                  {% for customer_distrbute in customer_distrbute_list %}#}
+                     <tr>
+                         <td> {{ customer_distrbute.title }}</td>
+{#                         <td> {{ customer_distrbute.get_status_display }}</td>#}
+                     </tr>
+{#                  {% endfor %}#}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

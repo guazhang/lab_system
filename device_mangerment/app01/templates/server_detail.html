@@ -1,0 +1,97 @@
+{% extends 'layout.html' %}
+
+{% block css %}
+    <style>
+        .guige {
+            margin: 20px;
+        }
+
+        .guige-table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .guige-table .title {
+            background: #f5fafe;
+            text-align: left;
+            font-weight: bold;
+            line-height: 32px;
+            height: 32px;
+            font-family: "微软雅黑";
+        }
+
+        .guige-table td, .content .guige-table th {
+            border: 1px solid #dcdcdc;
+            line-height: 30px;
+            height: 30px;
+            padding: 0 10px;
+        }
+
+        .guige-table .body-left {
+            width: 126px;
+            font-weight: normal;
+            text-align: right;
+            color: #666;
+        }
+
+        .guige-table .body-right {
+            color: #333;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="guige">
+        <table class="guige-table">
+            <tbody>
+            <tr>
+                <th colspan="5" class="title f14" style="border-left:2px solid #0488cd;">info</th>
+            </tr>
+            <tr>
+
+                <td>name</td>
+                <td>ip</td>
+                <td>roles</td>
+                <td>license_start</td>
+                <td>license_end</td>
+                <td>cpus</td>
+                <td>mems</td>
+                <td>disks</td>
+                <td>CNAs</td>
+                <td>HBAs</td>
+                <td>boot_to</td>
+                <td colspan="2">comments</td>
+                <td >st</td>
+                <td >sw</td>
+            </tr>
+            {% for n in host_info %}
+                <tr>
+                    <td>{{ n.hostname }} </td>
+                    <td>{{ n.ip }} </td>
+                    <td>{{ n.roles }} </td>
+                    <td>{{ n.license_start }} </td>
+                    <td>{{ n.license_end }} </td>
+                    <td>{{ n.cpus }} </td>
+                    <td>{{ n.mems }} </td>
+                    <td>{{ n.disks }} </td>
+                    <td>{{ n.CNAs }} </td>
+                    <td>{{ n.HBAs }} </td>
+                    <td>{{ n.boot_to }} </td>
+                    <td>{{ n.comments }} </td>
+
+                     {% endfor %}
+                {% for foo in st %}
+                    <td colspan="2"> {{ foo.st__storage_name__name }} </td>
+                {% endfor %}
+
+                {% for foo in sw %}
+                    <td colspan="2"> {{ foo.sw__switch_name__switch_name }} </td>
+                {% endfor %}
+             </tr>
+
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

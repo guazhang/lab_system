@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>Title</title>
+     <link rel="stylesheet" href="/static/bs/css/bootstrap.css">
+</head>
+<body>
+<h3>公共客户资源</h3>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table-bordered table-striped table">
+                <thead>
+                <tr>
+                    <th>QQ</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>跟进</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                  {% for customer in customer_list %}
+                     <tr>
+                         <td>{{ customer.qq }}</td>
+                         <td>{{ customer.name }}</td>
+                         <td>{{ customer.get_gender_display }}</td>
+                         <td><a href="/stark/crm/customer/further_follow/{{ customer.pk }}">确定跟进</a></td>
+                     </tr>
+                  {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
